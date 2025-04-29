@@ -24,16 +24,16 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ category }) => {
 
   return (
     <div
-      className="bg-white rounded-xl shadow-lg p-6 cursor-pointer transform transition-all hover:scale-105"
+      className="glass-card rounded-xl p-6 cursor-pointer transform transition-all hover:scale-105 hover:bg-white/15"
       onClick={() => navigate(`/category/${category.id}`)}
     >
       <div className="flex items-center space-x-4">
-        <div className="p-3 bg-blue-100 rounded-lg">
-          <Icon className="w-6 h-6 text-blue-600" />
+        <div className="p-3 bg-blue-500/20 rounded-lg">
+          <Icon className="w-6 h-6 text-blue-400" />
         </div>
         <div>
-          <h3 className="text-xl font-semibold text-gray-800">{category.name}</h3>
-          <p className="text-gray-600 mt-1">{category.description}</p>
+          <h3 className="text-xl font-semibold text-white">{category.name}</h3>
+          <p className="text-blue-200/80 mt-1">{category.description}</p>
         </div>
       </div>
     </div>

@@ -13,11 +13,21 @@ export interface Model {
     f1Score?: number;
     latency?: string;
   };
-}
-
-export interface Category {
-  id: string;
-  name: string;
-  description: string;
-  icon: string;
+  architecture?: {
+    type: string;
+    layers: number;
+    parameters: string;
+    trainingData: string;
+  };
+  capabilities?: {
+    strengths: string[];
+    limitations: string[];
+  };
+  useCases?: string[];
+  ethicalConsiderations?: string[];
+  requirements?: {
+    compute: string;
+    memory: string;
+    storage: string;
+  };
 }
