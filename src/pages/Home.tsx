@@ -2,7 +2,7 @@ import React from 'react';
 import { Brain } from 'lucide-react';
 import CategoryCard from '../components/CategoryCard';
 import ModelCard from '../components/ModelCard';
-import Footer from '../components/Footer';
+// import Footer from '../components/Footer';
 import { categories, models } from '../data/models';
 
 const Home: React.FC = () => {
