@@ -13,21 +13,34 @@ export interface Model {
     f1Score?: number;
     latency?: string;
   };
-  architecture?: {
-    type: string;
-    layers: number;
+  trainingParameters: {
+    architecture: string;
     parameters: string;
-    trainingData: string;
+    trainingTokens: string;
+    contextWindow: string;
+    trainingData: string[];
+    computeUsed: string;
+    trainingTime: string;
+    optimizations: string[];
+    modelSize: string;
+    quantization?: string;
   };
-  capabilities?: {
-    strengths: string[];
-    limitations: string[];
+  requirements: {
+    pricing: string;
+    apiKey: boolean;
+    authentication: boolean;
+    hardware: string;
   };
-  useCases?: string[];
-  ethicalConsiderations?: string[];
-  requirements?: {
-    compute: string;
-    memory: string;
-    storage: string;
-  };
+  limitations: string[];
+  alternatives: {
+    name: string;
+    comparison: string;
+  }[];
+}
+
+export interface Category {
+  id: string;
+  name: string;
+  description: string;
+  icon: string;
 }

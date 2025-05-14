@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Rethink+Sans:wght@400;700&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -5,7 +6,16 @@
 @layer base {
   body {
     background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    background-size: 400% 400%;
+    animation: gradientMove 16s ease-in-out infinite;
+    font-family: 'Rethink Sans', sans-serif;
   }
+}
+
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 @layer components {
