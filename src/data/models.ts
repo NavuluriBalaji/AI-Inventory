@@ -2,6 +2,12 @@ import { Model, Category } from '../types/model';
 
 export const categories: Category[] = [
   {
+    id: 'text-based',
+    name: 'Text-Based',
+    description: 'Models that operate on text data inputs and outputs',
+    icon: 'file-text'
+  },
+  {
     id: 'text-classification',
     name: 'Text Classification',
     description: 'Models specialized in categorizing text into predefined classes',
@@ -18,6 +24,12 @@ export const categories: Category[] = [
     name: 'Regression Models',
     description: 'Models designed for numerical prediction tasks',
     icon: 'trending-up',
+  },
+  {
+    id: 'transformer-based',
+    name: 'Transformer-Based',
+    description: 'Models based on the transformer architecture, such as BERT, GPT, T5, etc.',
+    icon: 'cpu',
   },
 ];
 
