@@ -10,28 +10,47 @@ const CategoryPage: React.FC = () => {
   const categoryModels = models.filter((model) => model.category === categoryId);
 
   if (!category) {
-    return <div>Category not found</div>;
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-black text-gray-200 font-rethink">
+        <div className="text-center">
+          <h2 className="text-2xl font-bold mb-2">Category not found</h2>
+          <Link to="/" className="text-blue-400 hover:underline">
+            Go back to Home
+          </Link>
+        </div>
+      </div>
+    );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-gray-950 text-gray-100 font-rethink">
       <div className="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
         <Link
           to="/"
-          className="inline-flex items-center text-blue-600 hover:text-blue-800 mb-8"
+          className="inline-flex items-center text-blue-400 hover:text-blue-300 mb-8 transition-colors"
         >
           <ArrowLeft className="w-4 h-4 mr-2" />
           Back to Categories
         </Link>
 
-        <h1 className="text-3xl font-bold text-gray-900 mb-4">{category.name}</h1>
-        <p className="text-xl text-gray-600 mb-8">{category.description}</p>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {categoryModels.map((model) => (
-            <ModelCard key={model.id} model={model} />
-          ))}
+        <div className="mb-8">
+          <h1 className="text-4xl font-bold text-white-300 mb-2 flex items-center gap-3">
+            {category.name}
+          </h1>
+          <p className="text-lg text-gray-300">{category.description}</p>
         </div>
+
+        {categoryModels.length === 0 ? (
+          <div className="text-center text-gray-400 py-16 text-xl">
+            No models found in this category.
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {categoryModels.map((model) => (
+              <ModelCard key={model.id} model={model} />
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

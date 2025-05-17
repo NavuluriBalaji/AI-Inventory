@@ -7,7 +7,7 @@ const Footer: React.FC = () => {
       <div className="max-w-7xl mx-auto flex flex-col items-center">
         <div className="text-center mb-4">
           <h3 className="text-xl font-semibold text-white mb-2">Created by Navuluri Balaji</h3>
-          <p className="text-blue-200/80">Full Stack Developer & AI Enthusiast</p>
+          <p className="text-blue-200/80">Full Stack Developer & AI Engineer</p>
         </div>
         
         <div className="flex space-x-6 mt-4">

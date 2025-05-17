@@ -1,7 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Tag, MessageSquare, TrendingUp } from 'lucide-react';
+import { Tag, MessageSquare, TrendingUp, Cpu, FileText } from 'lucide-react';
 import { Category } from '../types/model';
+
 
 interface CategoryCardProps {
   category: Category;
@@ -11,6 +12,8 @@ const iconMap = {
   'tag': Tag,
   'message-square': MessageSquare,
   'trending-up': TrendingUp,
+  'Cpu': Cpu,
+  'file-text': FileText,
 };
 
 const CategoryCard: React.FC<CategoryCardProps> = ({ category }) => {
