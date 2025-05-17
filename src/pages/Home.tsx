@@ -2,7 +2,7 @@ import React,{ useState } from 'react';
 import { Brain } from 'lucide-react';
 import CategoryCard from '../components/CategoryCard';
 import ModelCard from '../components/ModelCard';
-import Footer from '../components/Footer';
+import footer from '../components/footer';
 import AnimatedBackground from '../components/AnimatedBackground';
 import { categories, models } from '../data/models';
 
