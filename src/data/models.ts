@@ -2,7 +2,7 @@ import { Model, Category } from '../types/model';
 
 export const categories: Category[] = [
   {
-    id: 'text-based',
+    id: 'text-generation',
     name: 'Text-Based',
     description: 'Models that operate on text data inputs and outputs',
     icon: 'file-text'
@@ -26,8 +26,8 @@ export const categories: Category[] = [
     icon: 'trending-up',
   },
   {
-    id: 'transformer-based',
-    name: 'Transformer-based',
+    id: 'seq2seq',
+    name: 'seq2seq',
     description: 'Models based on the transformer architecture, such as BERT, GPT, T5, etc.',
     icon: 'Cpu',
   },
@@ -117,7 +117,7 @@ export const models: Model[] = [
     provider: 'Google',
     documentationUrl: 'https://github.com/google-research/bert',
     testUrl: 'https://huggingface.co/bert-base-uncased',
-    imageUrl: 'https://images.unsplash.com/photo-1655720828018-edd2daec9349',
+    imageUrl: 'https://cdn-thumbnails.huggingface.co/social-thumbnails/distilbert.png',
     features: [
       'Text classification',
       'Named entity recognition',
@@ -176,69 +176,69 @@ export const models: Model[] = [
       }
     ]
   },
-  {
-  id: 'xgboost-regression',
-  name: 'XGBoost Regression',
-  description: 'Efficient gradient boosting model optimized for structured data',
-  category: 'regression',
-  provider: 'DMLC',
-  documentationUrl: 'https://xgboost.readthedocs.io/en/stable/',
-  testUrl: 'https://www.kaggle.com/code/ryanholbrook/xgboost-tutorial',
-  imageUrl: 'https://images.unsplash.com/photo-1581091012184-5c7c8e64736e',
-  features: [
-    'Numerical regression',
-    'Feature importance analysis',
-    'Outlier detection',
-    'Custom objective support'
-  ],
-  metrics: {
-    // rmse: 2.45,
-    // r2Score: 0.91
-  },
-  trainingParameters: {
-    architecture: 'Ensemble of decision trees with gradient boosting',
-    parameters: 'Varies based on dataset',
-    trainingTokens: 'Not token-based',
-    contextWindow: 'Not applicable',
-    trainingData: [
-      'Structured tabular datasets',
-      'CSV/Excel files',
-      'Relational databases'
-    ],
-    computeUsed: 'CPU or GPU acceleration supported',
-    trainingTime: 'Minutes to hours based on dataset size',
-    optimizations: [
-      'Tree pruning',
-      'Regularization (L1/L2)',
-      'Histogram-based learning',
-      'Parallelized tree construction'
-    ],
-    modelSize: 'Depends on tree depth and number',
-    quantization: 'Built-in support for tree pruning and early stopping'
-  },
-  requirements: {
-    pricing: 'Open-source, free to use',
-    apiKey: false,
-    authentication: false,
-    hardware: 'Can run on CPU; GPU recommended for large datasets'
-  },
-  limitations: [
-    'Less effective on unstructured data',
-    'Not ideal for real-time inference',
-    'May overfit small datasets if not tuned',
-    'Limited interpretability for complex ensembles'
-  ],
-  alternatives: [
-    {
-      name: 'LightGBM',
-      comparison: 'Faster training and lower memory usage'
-    },
-    {
-      name: 'CatBoost',
-      comparison: 'Better with categorical features out-of-the-box'
-    }
-  ]
-},
+//   {
+//   id: 'xgboost-regression',
+//   name: 'XGBoost Regression',
+//   description: 'Efficient gradient boosting model optimized for structured data',
+//   category: 'regression',
+//   provider: 'DMLC',
+//   documentationUrl: 'https://xgboost.readthedocs.io/en/stable/',
+//   testUrl: 'https://www.kaggle.com/code/ryanholbrook/xgboost-tutorial',
+//   imageUrl: 'https://images.unsplash.com/photo-1581091012184-5c7c8e64736e',
+//   features: [
+//     'Numerical regression',
+//     'Feature importance analysis',
+//     'Outlier detection',
+//     'Custom objective support'
+//   ],
+//   metrics: {
+//     // rmse: 2.45,
+//     // r2Score: 0.91
+//   },
+//   trainingParameters: {
+//     architecture: 'Ensemble of decision trees with gradient boosting',
+//     parameters: 'Varies based on dataset',
+//     trainingTokens: 'Not token-based',
+//     contextWindow: 'Not applicable',
+//     trainingData: [
+//       'Structured tabular datasets',
+//       'CSV/Excel files',
+//       'Relational databases'
+//     ],
+//     computeUsed: 'CPU or GPU acceleration supported',
+//     trainingTime: 'Minutes to hours based on dataset size',
+//     optimizations: [
+//       'Tree pruning',
+//       'Regularization (L1/L2)',
+//       'Histogram-based learning',
+//       'Parallelized tree construction'
+//     ],
+//     modelSize: 'Depends on tree depth and number',
+//     quantization: 'Built-in support for tree pruning and early stopping'
+//   },
+//   requirements: {
+//     pricing: 'Open-source, free to use',
+//     apiKey: false,
+//     authentication: false,
+//     hardware: 'Can run on CPU; GPU recommended for large datasets'
+//   },
+//   limitations: [
+//     'Less effective on unstructured data',
+//     'Not ideal for real-time inference',
+//     'May overfit small datasets if not tuned',
+//     'Limited interpretability for complex ensembles'
+//   ],
+//   alternatives: [
+//     {
+//       name: 'LightGBM',
+//       comparison: 'Faster training and lower memory usage'
+//     },
+//     {
+//       name: 'CatBoost',
+//       comparison: 'Better with categorical features out-of-the-box'
+//     }
+//   ]
+// },
 {
   id: 't5-base',
   name: 'T5 Base',
@@ -247,7 +247,7 @@ export const models: Model[] = [
   provider: 'Google',
   documentationUrl: 'https://huggingface.co/t5-base',
   testUrl: 'https://huggingface.co/transformers/model_doc/t5.html',
-  imageUrl: 'https://images.unsplash.com/photo-1633356122342-d1c45d9f5c89',
+  imageUrl: 'https://static1.makeuseofimages.com/wordpress/wp-content/uploads/2023/07/t5.jpg?q=50&fit=crop&w=825&dpr=1.5',
   features: [
     'Text summarization',
     'Translation',
@@ -311,7 +311,7 @@ export const models: Model[] = [
   provider: 'Hugging Face',
   documentationUrl: 'https://huggingface.co/distilbert-base-uncased',
   testUrl: 'https://huggingface.co/models',
-  imageUrl: 'https://images.unsplash.com/photo-1611927503569-4a73f56a1b68',
+  imageUrl: 'https://cdn-thumbnails.huggingface.co/social-thumbnails/distilbert.png',
   features: [
     'Text classification',
     'Sentiment analysis',
@@ -415,7 +415,7 @@ export const models: Model[] = [
   {
     "id": "gpt-4.5",
     "name": "GPT-4.5",
-    "description": "GPT-4.5 is OpenAI’s souped-up version of GPT-4, taking everything great about its predecessor and cranking it up a notch. It’s sharper at reasoning, speaks more languages fluently, and pumps out text that’s scarily on-point. Need a blog post, a translation, or a chatbot that doesn’t sound like a robot? This model’s your guy. It’s like GPT-4 went to the gym and came back faster, smarter, and ready to tackle anything from customer service to creative writing without breaking a sweat.",
+    "description": "GPT-4.5 is OpenAI’s souped-up version of GPT-4, taking everything great about its predecessor and cranking it up a notch. It’s sharper at reasoning, speaks more languages fluently, and pumps out text that’s scarily on-point. Need a blog post, a translation, or a chatbot that doesn’t sound like a robot? This model’s your guy.",
     "category": "text-generation",
     "provider": "OpenAI",
     "documentationUrl": "https://platform.openai.com/docs/api-reference/introduction",
@@ -503,98 +503,125 @@ export const models: Model[] = [
       }
     ]
   },
-  {
-    "id": "claude-3.7-sonnet",
-    "name": "Claude 3.7 Sonnet",
-    "description": "Claude 3.7 Sonnet from Anthropic is the AI you’d trust to have a heart-to-heart. It’s built to be safe, ethical, and whip-smart, keeping conversations flowing naturally even over long chats. Whether it’s helping with homework, powering a customer service bot, or brainstorming ideas, Sonnet stays on track and keeps things friendly. Anthropic’s focus on values means this model won’t stray into sketchy territory, making it a go-to for businesses or schools that need reliability without the headaches.",
-    "category": "conversational-ai",
-    "provider": "Anthropic",
-    "documentationUrl": "https://docs.anthropic.com/en/api/getting-started",
-    "testUrl": "https://claude.ai/",
-    "imageUrl": "https://storage.googleapis.com/swipe-insight/content/images/article_images/72_edited_7240876.webp",
-    "features": ["Dialogue", "Ethical reasoning", "Large context window"],
-    "metrics": {
-      "accuracy": 0.91,
-      "latency": "500ms"
-    },
-    "trainingParameters": {
-      "architecture": "Transformer-based",
-      "parameters": "Unknown",
-      "trainingTokens": "Unknown",
-      "contextWindow": "Unknown",
-      "trainingData": ["Text", "Code", "Other Data"],
-      "computeUsed": "Unknown",
-      "trainingTime": "Unknown",
-      "optimizations": ["Unknown"],
-      "modelSize": "Unknown",
-      "quantization": "Unknown"
-    },
-    "requirements": {
-      "pricing": "Subscription-based",
-      "apiKey": true,
-      "authentication": true,
-      "hardware": "Cloud-based"
-    },
-    "limitations": [
-      "May occasionally generate incorrect information",
-      "Cannot access real-time information",
-      "Unknown context window",
-      "Requires internet connection",
-      "Cannot learn from conversations"
-    ],
-    "alternatives": [
-      {
-        "name": "GPT-4",
-        "comparison": "Focuses on safety and conversational ability"
-      }
-    ]
+{
+  "id": "claude-3.7-sonnet",
+  "name": "Claude 3.7 Sonnet",
+  "description": "Claude 3.7 Sonnet from Anthropic is the AI you’d trust to have a heart-to-heart. It’s built to be safe, ethical, and whip-smart, keeping conversations flowing naturally even over long chats. Whether it’s helping with homework, powering a customer service bot, or brainstorming ideas, Sonnet stays on track and keeps things friendly. Anthropic’s focus on values means this model won’t stray into sketchy territory, making it a go-to for businesses or schools that need reliability without the headaches.",
+  "category": "conversational-ai",
+  "provider": "Anthropic",
+  "documentationUrl": "https://docs.anthropic.com/en/api/getting-started",
+  "testUrl": "https://claude.ai/",
+  "imageUrl": "https://storage.googleapis.com/swipe-insight/content/images/article_images/72_edited_7240876.webp",
+  "features": [
+    "Dialogue",
+    "Ethical reasoning",
+    "Large context window"
+  ],
+  "metrics": {
+    "accuracy": 0.91,
+    "latency": "500ms"
   },
-  {
-    "id": "deepseek-r1",
-    "name": "DeepSeek R1",
-    "description": "DeepSeek R1 is a giant open-source model with 671 billion parameters, ready to chew through math, science, or code like it’s breakfast. It’s the kind of AI researchers and devs love—free to tweak, perfect for digging into tough problems like quantum physics or software bugs. With a massive context window, it can keep track of sprawling datasets or long documents without losing the plot. DeepSeek’s gift to the open-source world is a game-changer for anyone who wants serious brainpower without a paywall.",
-    "category": "text-generation",
-    "provider": "DeepSeek",
-    "documentationUrl": "https://github.com/deepseek-ai",
-    "testUrl": "https://chat.deepseek.com/",
-    "imageUrl": "https://i.bstr.es/drivingeco/2025/01/Deepseek-r1-logo-880x495.webp",
-    "features": ["Open source", "Scientific reasoning", "Massive context"],
-    "metrics": {
-      "accuracy": 0.91,
-      "latency": "500ms"
-    },
-    "trainingParameters": {
-      "architecture": "Transformer-based",
-      "parameters": "671 billion parameters",
-      "trainingTokens": "Unknown",
-      "contextWindow": "Unknown",
-      "trainingData": ["Text", "Code", "Math", "Science"],
-      "computeUsed": "Unknown",
-      "trainingTime": "Unknown",
-      "optimizations": ["Unknown"],
-      "modelSize": "Unknown",
-      "quantization": "Unknown"
-    },
-    "requirements": {
-      "pricing": "Free (Open Source)",
-      "apiKey": false,
-      "authentication": false,
-      "hardware": "Can be run on local hardware"
-    },
-    "limitations": [
-      "May occasionally generate incorrect information",
-      "Cannot access real-time information",
-      "Unknown context window",
-      "Requires internet connection",
-      "Cannot learn from conversations"
+  "trainingParameters": {
+    "architecture": "Transformer-based",
+    "parameters": "Not disclosed",
+    "trainingTokens": "Not disclosed",
+    "contextWindow": "200K tokens (128K output, 64K GA, 128K beta)",
+    "trainingData": [
+      "Text",
+      "Code",
+      "Other Data"
     ],
-    "alternatives": [
-      {
-        "name": "LLaMA 4",
-        "comparison": "Another open-source model, but focus on reasoning"
-      }
-    ]
+    "computeUsed": "Not disclosed",
+    "trainingTime": "Not disclosed",
+    "optimizations": [
+      "Budget-controlled thinking",
+      "Extended reasoning"
+    ],
+    "modelSize": "Not disclosed",
+    "quantization": "Not disclosed"
   },
+  "requirements": {
+    "pricing": "$3/million input, $15/million output tokens",
+    "apiKey": true,
+    "authentication": true,
+    "hardware": "Cloud-based"
+  },
+  "limitations": [
+    "May occasionally generate incorrect information",
+    "Cannot access real-time information",
+    "Requires internet connection",
+    "Cannot learn from conversations"
+  ],
+  "alternatives": [
+    {
+      "name": "GPT-4",
+      "comparison": "Focuses on safety and conversational ability"
+    }
+  ],
+},  
+{
+  "id": "deepseek-r1",
+  "name": "DeepSeek R1",
+  "description": "DeepSeek R1 is a giant open-source model designed for advanced reasoning, math, science, and code tasks. It leverages a Mixture of Experts (MoE) architecture for efficiency and is fully open-source under the MIT License. DeepSeek R1 excels in structured problem-solving and is optimized for long-context tasks.",
+  "category": "text-generation",
+  "provider": "DeepSeek",
+  "documentationUrl": "https://github.com/deepseek-ai/DeepSeek-R1",
+  "testUrl": "https://chat.deepseek.com/",
+  "imageUrl": "https://www.aimodels.fyi/_next/image?url=https%3A%2F%2Ftjzk.replicate.delivery%2Fmodels_models_featured_image%2F302182ab-af74-4963-97f2-6121a80c61d7%2Fdeepseek-r1-cover.webp&w=1920&q=75",
+  "features": [
+    "Open source",
+    "Scientific reasoning",
+    "Massive context window",
+    "Efficient Mixture of Experts architecture",
+    "Advanced math and code generation"
+  ],
+  "metrics": {
+    "accuracy": 0.91,
+    "latency": "20-100 seconds (API, varies by deployment)"
+  },
+  "trainingParameters": {
+    "architecture": "Mixture of Experts (MoE), Transformer-based",
+    "parameters": "145 billion total (MoE), ~2.8 billion active per token",
+    "trainingTokens": "Not disclosed",
+    "contextWindow": "Expanded (larger than GPT-3, exact size not disclosed)",
+    "trainingData": [
+      "Text",
+      "Code",
+      "Math",
+      "Science"
+    ],
+    "computeUsed": "Not disclosed",
+    "trainingTime": "Not disclosed",
+    "optimizations": [
+      "Self-verification",
+      "Reflection",
+      "Dynamic expert routing",
+      "Load balancing"
+    ],
+    "modelSize": "145 billion parameters (total)",
+    "quantization": "Not disclosed"
+  },
+  "requirements": {
+    "pricing": "Free (Open Source, MIT License)",
+    "apiKey": false,
+    "authentication": false,
+    "hardware": "Can be run on local hardware (requires high-end GPUs for full model)"
+  },
+  "limitations": [
+    "May occasionally generate incorrect information",
+    "Cannot access real-time information",
+    "Context window size not precisely disclosed",
+    "Requires significant hardware for full-scale inference",
+    "No image analysis or function calling support",
+    "Cannot learn from conversations"
+  ],
+  "alternatives": [
+    {
+      "name": "LLaMA 4",
+      "comparison": "Another open-source model, but focus on reasoning"
+    }
+  ]
+},
   {
     "id": "qwen2.5-max",
     "name": "Qwen2.5-Max",
