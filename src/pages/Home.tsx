@@ -9,11 +9,27 @@ import CompareModels from '../components/CompareModels';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { Link } from 'react-router-dom';
+
+// Add icons (use any icon library or SVGs, here using Heroicons SVGs for demo)
+const HamburgerIcon = () => (
+  <svg className="w-8 h-8 text-green-400" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+  </svg>
+);
+
+const UpArrowIcon = () => (
+  <svg className="w-10 h-10 text-green-500" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M5 15l7-7 7 7" />
+  </svg>
+);
 
 const Home: React.FC = () => {
   const [search, setSearch] = useState('');
   const [aiSummaries, setAiSummaries] = useState<{id: number, title: string, summary: string, link: string, image?: string}[]>([]);
   const [loadingNews, setLoadingNews] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [showScroll, setShowScroll] = useState(false);
 
   const filteredModels = models.filter(model =>
     model.name.toLowerCase().includes(search.toLowerCase()) ||
@@ -29,6 +45,12 @@ const Home: React.FC = () => {
       .then(data => setAiSummaries(data))
       .catch(() => setAiSummaries([]))
       .finally(() => setLoadingNews(false));
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => setShowScroll(window.scrollY > 200);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   // Helper to split news into two rows
@@ -50,8 +72,90 @@ const Home: React.FC = () => {
     autoplaySpeed: 5000, // slide every 5 seconds (5000 ms)
   };
 
+  const terminology = [
+    {
+      id: 1,
+      term: "Mixture of Experts",
+      image: "https://media.licdn.com/dms/image/v2/D4D12AQGAElCH8gD08g/article-cover_image-shrink_600_2000/article-cover_image-shrink_600_2000/0/1709821617807?e=2147483647&v=beta&t=n9R9d_Z8367uJJvfdiHiYvX4rQ_Hd6bZrkzve4YO3qk",
+      description:
+        "A Mixture of Experts (MoE) is a neural network architecture that routes inputs to different 'expert' subnetworks, allowing for more efficient and specialized processing. This technique enables large models to scale efficiently by activating only a subset of parameters for each input.",
+      source: "https://medium.com/@bijit211987/mixture-of-experts-moe-scaling-ai-horizons-44de79ba2e89"
+    },
+    {
+      id: 2,
+      term: "State-of-the-Art Models",
+      image: "https://miro.medium.com/v2/resize:fit:720/format:webp/1*A7G739cVw4C9lSzwApxuvw.png",
+      description:
+        "State-of-the-art (SOTA) models are the most advanced and effective models available for a specific task, often achieving the best performance on benchmark datasets. Examples include GPT-4, PaLM, and Llama 2.",
+      source: "https://medium.com/@balajinbtt/decoding-state-of-the-art-sota-models-49352087e871"
+    },
+    {
+      id: 3,
+      term: "Vectorization",
+      image: "https://cdn.prod.website-files.com/64b3ee21cac9398c75e5d3ac/66e9918c2dfe77807c0a492c_65d4734f284089e516b145fe_arya_vector_databases_important_llms_3.png",
+      description:
+        "Vectorization is the process of converting data (such as text or images) into numerical vectors so that machine learning models can process them. In NLP, this often involves embedding words or sentences into high-dimensional spaces.",
+      source: "https://www.geeksforgeeks.org/vectorization-techniques-in-nlp/"
+    },
+    {
+      id: 4,
+      term: "Fine-tuning",
+      image: "https://miro.medium.com/v2/resize:fit:720/format:webp/1*M7BlWvqu5UPCNLw8yhV9IQ.png",
+      description:
+        "Fine-tuning is the process of taking a pre-trained model and training it further on a specific dataset to adapt it for a particular task, improving its performance on domain-specific data.",
+      source: "https://rahulrajpvr7d.medium.com/what-is-fine-tuning-language-models-a-simple-explanation-8054685a4218"
+    },
+    {
+      id: 5,
+      term: "Prompt Engineering",
+      image: "https://miro.medium.com/v2/resize:fit:720/format:webp/1*8w1kLTlaX2UjsFvdcGaVbA.png",
+      description:
+        "Prompt engineering involves designing and optimizing input prompts to elicit the best possible responses from language models. It's a key technique for leveraging the capabilities of large language models.",
+      source: "https://medium.com/@promptengineering/prompt-engineering-101-1c1f5a7e3b2"
+    }
+  ];
+
+  const scrollToSection = (id: string) => {
+    setMenuOpen(false);
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+
   return (
-    <div className="min-h-screen w-full bg-black text-gray-100 font-rethink flex flex-col">
+    <div className="min-h-screen w-full bg-black text-gray-100 font-rethink flex flex-col relative">
+      {/* Hamburger Menu */}
+      <div className="fixed top-4 left-4 z-50 md:hidden">
+        <button
+          aria-label="Open menu"
+          onClick={() => setMenuOpen(!menuOpen)}
+          className="focus:outline-none"
+        >
+          <HamburgerIcon />
+        </button>
+        {menuOpen && (
+          <div className="absolute mt-2 left-0 bg-gray-900 border border-green-900 rounded-lg shadow-lg w-56 p-4 flex flex-col space-y-4 z-50">
+            <button onClick={() => scrollToSection('featured-models')} className="text-green-400 text-lg text-left">Featured Models</button>
+            <button onClick={() => scrollToSection('categories')} className="text-green-400 text-lg text-left">Categories</button>
+            <button onClick={() => scrollToSection('ai-inventions')} className="text-green-400 text-lg text-left">Latest AI Inventions</button>
+            <button onClick={() => scrollToSection('compare-models')} className="text-green-400 text-lg text-left">Compare Models</button>
+            <button onClick={() => scrollToSection('terminology')} className="text-green-400 text-lg text-left">AI Terminology</button>
+          </div>
+        )}
+      </div>
+
+      {/* Scroll Up Button */}
+      {showScroll && (
+        <button
+          onClick={scrollToTop}
+          className="fixed bottom-8 right-8 z-40 bg-gray-900 border border-green-700 rounded-full p-2 shadow-lg hover:bg-green-800 transition"
+          aria-label="Scroll to top"
+        >
+          <UpArrowIcon />
+        </button>
+      )}
+
       <AnimatedBackground />
       <div className="flex-1 flex flex-col justify-center items-center py-12">
         <div className="text-center mb-12 w-full">
@@ -78,7 +182,7 @@ const Home: React.FC = () => {
         </div>
         
 
-        <div className="mb-12 w-full px-4">
+        <div id="featured-models" className="mb-12 w-full px-4">
           <h2 className="text-xl font-semibold mb-6 border-b border-green-900 pb-2 text-green-500 font-rethink">Featured Models</h2>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6 font-semibold font-rethink">
             {filteredModels.length > 0 ? (
@@ -100,7 +204,7 @@ const Home: React.FC = () => {
           </div>
         </div>
 
-        <div className="mb-12 w-full px-4 font-rethink">
+        <div id="categories" className="mb-12 w-full px-4 font-rethink">
           <h1 className="text-xl font-medium mb-6 border-b border-green-900 pb-2 text-green-500 font-rethink">Search Models by categories</h1>
           <div className="grid grid-cols-1 md:grid-cols-5 gap-6 font-rethink">
             {categories.map((category) => (
@@ -110,7 +214,7 @@ const Home: React.FC = () => {
         </div>
 
         {/* Latest AI Inventions Section */}
-        <div className="mb-12 w-full px-4 font-rethink">
+        <div id="ai-inventions" className="mb-12 w-full px-4 font-rethink">
           <h2 className="text-xl font-semibold mb-6 border-b border-green-900 pb-2 text-green-500 font-rethink">
             Latest AI Inventions
           </h2>
@@ -157,14 +261,61 @@ const Home: React.FC = () => {
           )}
         </div>
 
-        <div className="mb-16">
+        <div id="terminology" className="mb-12 w-full px-4 font-rethink">
+          <div className="flex items-center justify-between mb-6 border-b border-green-900 pb-2">
+            <h2 className="text-xl font-semibold text-green-500 font-rethink">
+              AI Terminology Explained
+            </h2>
+            <Link
+              to="/terminology"
+              className="px-6 py-2 bg-green-700 text-white rounded-lg hover:bg-green-800 transition font-semibold"
+            >
+              Explore More
+            </Link>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+            {terminology.slice(0, 4).map(term => (
+              <div
+                key={term.id}
+                className="bg-gray-900/80 rounded-xl p-6 shadow border border-green-900 flex flex-col hover:shadow-lg transition"
+              >
+                <img
+                  src={term.image}
+                  alt={term.term}
+                  className="w-full h-56 object-cover rounded mb-4"
+                  style={{ background: "#222" }}
+                />
+                <h3 className="text-lg font-bold text-green-400 mb-2">{term.term}</h3>
+                <p className="text-gray-200 mb-4">{term.description}</p>
+                <a
+                  href={term.source}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-auto text-green-400 underline hover:text-green-300 font-medium"
+                >
+                  Learn more
+                </a>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div id="compare-models" className="mb-16">
           <CompareModels />
         </div>
         
         <div className="mb-12 w-full px-4">
-          {/* ...existing code... */}
+          {/* Empty div for spacing */}
         </div>
-        {/* ...existing code... */}
+        {/* Subscribe Button */}
+        <div className="w-full flex justify-center mb-8">
+          <button
+            className="px-8 py-3 bg-green-700 text-white rounded-lg hover:bg-green-800 transition font-semibold text-lg shadow"
+            onClick={() => window.open('mailto:balajinbtt@gmail.com?subject=Subscribe%20to%20LLM%20Updates', '_blank')}
+          >
+            Subscribe
+          </button>
+        </div>
       </div>
       <Footer />
     </div>

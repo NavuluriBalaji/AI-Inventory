@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import CategoryPage from './pages/CategoryPage';
 import ModelDetail from './pages/ModelDetail';
+import Terminology from './pages/Terminology';
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/category/:categoryId" element={<CategoryPage />} />
         <Route path="/model/:modelId" element={<ModelDetail />} />
+        <Route path="/terminology" element={<Terminology />} />
       </Routes>
     </Router>
   );
