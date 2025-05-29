@@ -30,6 +30,9 @@ const Home: React.FC = () => {
   const [loadingNews, setLoadingNews] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [showScroll, setShowScroll] = useState(false);
+  const [email, setEmail] = useState('');
+  const [subscribed, setSubscribed] = useState(false);
+  const [subscribeError, setSubscribeError] = useState('');
 
   const filteredModels = models.filter(model =>
     model.name.toLowerCase().includes(search.toLowerCase()) ||
@@ -122,6 +125,30 @@ const Home: React.FC = () => {
   };
 
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  const handleSubscribe = async () => {
+    setSubscribeError('');
+    if (!email || !/\S+@\S+\.\S+/.test(email)) {
+      setSubscribeError('Please enter a valid email address.');
+      return;
+    }
+    try {
+      const res = await fetch('http://localhost:4000/api/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email })
+      });
+      if (res.ok) {
+        setSubscribed(true);
+        setEmail('');
+      } else {
+        const data = await res.json();
+        setSubscribeError(data.details || 'Subscription failed. Try again.');
+      }
+    } catch {
+      setSubscribeError('Server error. Try again later.');
+    }
+  };
 
   return (
     <div className="min-h-screen w-full bg-black text-gray-100 font-rethink flex flex-col relative">
@@ -307,15 +334,54 @@ const Home: React.FC = () => {
         <div className="mb-12 w-full px-4">
           {/* Empty div for spacing */}
         </div>
-        {/* Subscribe Button */}
-        <div className="w-full flex justify-center mb-8">
-          <button
-            className="px-8 py-3 bg-green-700 text-white rounded-lg hover:bg-green-800 transition font-semibold text-lg shadow"
-            onClick={() => window.open('mailto:balajinbtt@gmail.com?subject=Subscribe%20to%20LLM%20Updates', '_blank')}
-          >
-            Subscribe
-          </button>
+        {/* Funky Subscribe Section */}
+        <div className="w-full flex flex-col items-center">
+          <div className="relative flex flex-col items-center mb-8">
+            <span className="text-3xl md:text-4xl font-extrabold text-green-400 font-handwritten mb-2 tracking-tight drop-shadow-lg">
+              Subscribe for LLM Updates!
+            </span>
+          </div>
+          <div className="w-full bg-gray-900/80 rounded-2xl shadow-lg border border-green-900 p-8 flex flex-col items-center">
+            {subscribed ? (
+              <div className="text-green-400 font-bold text-lg mt-2 text-center">
+                Thank you for subscribing!
+              </div>
+            ) : (
+              <>
+                <div className="w-full max-w-xl flex flex-col items-center md:flex-row md:justify-center gap-4">
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={e => setEmail(e.target.value)}
+                    placeholder="Enter your email"
+                    className="mb-3 md:mb-0 px-4 py-2 rounded-lg border-2 border-green-500 bg-gray-800 text-white w-full focus:ring-2 focus:ring-green-400 transition text-lg"
+                  />
+                  <button
+                    className="relative group px-8 py-3 bg-gradient-to-r from-green-600 via-green-500 to-green-400 text-white rounded-xl font-extrabold text-lg shadow-lg hover:from-green-500 hover:to-green-700 transition-all duration-200 w-full md:w-auto flex items-center justify-center overflow-hidden"
+                    onClick={handleSubscribe}
+                  >
+                    <span className="mr-2">🚀</span>
+                    Subscribe
+                    <span className="ml-2 group-hover:translate-x-1 transition-transform duration-200">→</span>
+                    <span className="absolute left-0 top-0 w-full h-full rounded-xl border-2 border-green-300 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none"></span>
+                  </button>
+                </div>
+                {subscribeError && (
+                  <div className="text-red-400 mt-2 text-sm text-center">{subscribeError}</div>
+                )}
+              </>
+            )}
+            <div className="mt-4 text-green-300 text-sm text-center opacity-80">
+              Get the latest LLM news, models, and features delivered to your inbox every week.
+            </div>
+          </div>
         </div>
+        {/* Thank you message */}
+        {/* <div className="w-full flex justify-center mb-8">
+          <span className="text-xl md:text-2xl font-bold text-green-300 font-handwritten text-center">
+            {"Thank you for visiting the website! 🚀"}
+          </span>
+        </div> */}
       </div>
       <Footer />
     </div>
