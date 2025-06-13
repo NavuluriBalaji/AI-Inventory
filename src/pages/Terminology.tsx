@@ -80,7 +80,24 @@ const terminology = [
     description:
       "Multimodality refers to models that can process and generate multiple types of data, such as text, images, and audio. Multimodal LLMs enable richer interactions and broader applications.",
     source: "https://www.tekrevol.com/blogs/multimodal-ai-how-it-works-use-cases-examples/"
-  }
+  },
+  {
+  id: 11,
+  term: "Reinforcement Learning from Human Feedback (RLHF)",
+  image: "https://media.geeksforgeeks.org/wp-content/uploads/20240215172754/Reinforcement-learning-from-human-feedback.webp",
+  description:
+    "Reinforcement Learning from Human Feedback (RLHF) is a technique where models learn from human feedback to improve their performance. It combines reinforcement learning with human evaluations to align model outputs with human preferences.",
+  source: "https://aws.amazon.com/what-is/reinforcement-learning-from-human-feedback/"
+  },
+  {
+    id: 12,
+    term: "Zero-shot Learning",
+    image: "https://www.dremio.com/wp-content/uploads/2023/07/Wiki-Zero-Shot-Learning-Featured-Image.png",
+    description:
+      "Zero-shot learning is the ability of a model to perform tasks it has not been explicitly trained on by leveraging its understanding of related tasks or concepts. This is a key feature of many LLMs, allowing them to generalize across diverse tasks.",
+    source: "https://www.oreilly.com/radar/zero-shot-learning/"
+  },
+  
 ];
 
 
