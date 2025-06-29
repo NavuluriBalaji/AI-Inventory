@@ -134,7 +134,7 @@ const Home: React.FC = () => {
       return;
     }
     try {
-      const res = await fetch('https://nodemailer-z81g.onrender.com/api/subscribe', {
+      const res = await fetch('https://nodemailer-g70d.onrender.com/api/subscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email })
