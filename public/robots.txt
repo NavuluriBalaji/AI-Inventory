@@ -1,0 +1,19 @@
+User-agent: *
+Allow: /
+
+# Disallow specific paths (add if needed)
+# Disallow: /admin/
+# Disallow: /private/
+
+# Allow AdSense crawlers explicitly
+User-agent: Mediapartners-Google
+Allow: /
+
+User-agent: AdsBot-Google
+Allow: /
+
+# Sitemap location
+Sitemap: https://ai-inventory.com/sitemap.xml
+
+# Crawl-delay for bots (optional)
+Crawl-delay: 1
