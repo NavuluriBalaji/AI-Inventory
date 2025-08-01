@@ -1,8 +1,6 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App.tsx';
-import SafeApp from './SafeApp.tsx';
-import TestApp from './TestApp.tsx';
 import './index.css';
 
 console.log('🚀 main.tsx loading...');
@@ -21,22 +19,9 @@ if (!rootElement) {
   const root = createRoot(rootElement);
   console.log('✅ React root created, rendering App...');
   
-  // Use SafeApp for production to handle errors gracefully
-  const isProduction = window.location.hostname.includes('vercel.app');
-  const useTestApp = new URLSearchParams(window.location.search).has('test');
-  
-  let AppToRender;
-  if (useTestApp) {
-    AppToRender = <TestApp />;
-  } else if (isProduction) {
-    AppToRender = <SafeApp />;
-  } else {
-    AppToRender = <App />;
-  }
-  
   root.render(
     <StrictMode>
-      {AppToRender}
+      <App />
     </StrictMode>
   );
   
