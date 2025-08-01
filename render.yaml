@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: ai-inventory-backend
+    env: node
+    plan: starter
+    buildCommand: npm install
+    startCommand: node server.js
+    rootDir: backend
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGODB_URI
+        sync: false
+      - key: FRONTEND_URL
+        sync: false
+      - key: PORT
+        value: 5000

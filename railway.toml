@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: ai-inventory-backend
+    source:
+      repo: your-github-username/AI-Inventory-main
+      branch: main
+      rootDirectory: /backend
+    build:
+      command: npm install
+    start:
+      command: node server.js
+    environment:
+      NODE_ENV: production
+    variables:
+      PORT: ${{ PORT }}
+      MONGODB_URI: ${{ MONGODB_URI }}
+      FRONTEND_URL: ${{ FRONTEND_URL }}
+    healthcheck:
+      path: /api/health
+      interval: 30s
+      timeout: 10s
+      retries: 3

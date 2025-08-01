@@ -1,0 +1,52 @@
+name: Deploy to Google Cloud Run
+
+on:
+  push:
+    branches: [main]
+    paths: ['backend/**']
+  pull_request:
+    branches: [main]
+    paths: ['backend/**']
+
+env:
+  PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+  SERVICE_NAME: ai-inventory-backend
+  REGION: us-central1
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Google Cloud CLI
+      uses: google-github-actions/setup-gcloud@v1
+      with:
+        project_id: ${{ secrets.GCP_PROJECT_ID }}
+        service_account_key: ${{ secrets.GCP_SA_KEY }}
+        export_default_credentials: true
+        
+    - name: Configure Docker for GCP
+      run: gcloud auth configure-docker
+      
+    - name: Build and deploy to Cloud Run
+      run: |
+        cd backend
+        gcloud run deploy $SERVICE_NAME \
+          --source . \
+          --platform managed \
+          --region $REGION \
+          --allow-unauthenticated \
+          --set-env-vars NODE_ENV=production,MONGODB_URI="${{ secrets.MONGODB_URI }}",FRONTEND_URL="${{ secrets.FRONTEND_URL }}" \
+          --memory 512Mi \
+          --cpu 1 \
+          --max-instances 10 \
+          --min-instances 0
+          
+    - name: Get service URL
+      run: |
+        SERVICE_URL=$(gcloud run services describe $SERVICE_NAME --region=$REGION --format='value(status.url)')
+        echo "Service deployed at: $SERVICE_URL"
+        echo "SERVICE_URL=$SERVICE_URL" >> $GITHUB_ENV
