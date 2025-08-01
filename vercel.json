@@ -1,18 +1,16 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "backend/server.js",
-      "use": "@vercel/node"
-    }
-  ],
+  "framework": "vite",
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "installCommand": "npm install",
   "routes": [
     {
-      "src": "/api/(.*)",
-      "dest": "/backend/server.js"
+      "src": "/(.*)",
+      "dest": "/index.html"
     }
   ],
   "env": {
-    "NODE_ENV": "production"
+    "VITE_API_URL": "https://aiinventory-633863780201.us-central1.run.app/api"
   }
 }
