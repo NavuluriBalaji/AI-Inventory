@@ -103,7 +103,7 @@ const Home: React.FC = () => {
         setLoadingModels(true);
         setModelsError('');
         
-        const response = await modelApi.getAll({ limit: 20, page: 1 });
+        const response = await modelApi.getAll({ limit: 20, page: 1, sort:'random' });
         if (response && response.models) {
           setModels(response.models);
           setTotalModels(response.pagination?.totalModels || response.models.length);
