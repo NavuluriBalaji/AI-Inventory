@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://aiinventory-633863780201.us-central1.run.app/api';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://aiinventorybackend.onrender.com/api';
 
 // Create axios instance with default config
 const api = axios.create({
