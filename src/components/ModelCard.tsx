@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ExternalLink } from 'lucide-react';
+import { ExternalLink, Zap, Box } from 'lucide-react';
 import { Model } from '../types/model';
 
 interface ModelCardProps {
@@ -11,41 +11,49 @@ const ModelCard: React.FC<ModelCardProps> = ({ model }) => {
   const navigate = useNavigate();
 
   return (
-    <div className="group bg-gray-900 rounded-3xl p-6 transition-all duration-300 hover:shadow-xl hover:shadow-gray-800/50 border border-gray-800 hover:border-gray-700 font-rethink">
+    <div className="group glass-card rounded-3xl p-6 relative overflow-hidden">
+      {/* Hover Glow Effect */}
+      <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/20 via-violet-500/20 to-fuchsia-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+      
       {/* Card content */}
-      <div className="space-y-4">
+      <div className="relative z-10 space-y-5">
         {/* Header with title and parameters */}
         <div className="flex items-start justify-between">
           <div className="flex-1">
-            <h3 className="text-xl font-bold text-white group-hover:text-gray-100 transition-colors duration-300 leading-tight">
+            <h3 className="text-xl font-bold text-white group-hover:text-cyan-300 transition-colors duration-300 leading-tight font-outfit">
               {model.name}
             </h3>
+            <div className="flex items-center mt-2 space-x-2 text-sm text-gray-400">
+              <Box className="w-4 h-4 text-cyan-500" />
+              <span>{model.provider}</span>
+            </div>
           </div>
-          <div className="ml-4 px-3 py-1 bg-gray-800 rounded-lg border border-gray-700">
-            <span className="text-gray-300 text-sm font-medium">
+          <div className="ml-4 px-3 py-1 bg-white/5 rounded-lg border border-white/10 backdrop-blur-sm">
+            <span className="text-cyan-300 text-xs font-bold font-mono">
               {model.trainingParameters.parameters}
             </span>
           </div>
         </div>
 
         {/* Description */}
-        <p className="text-gray-400 text-sm leading-relaxed group-hover:text-gray-300 transition-colors duration-300 min-h-[3rem]">
+        <p className="text-gray-400 text-sm leading-relaxed line-clamp-2 min-h-[2.5rem]">
           {model.description}
         </p>
 
         {/* Features - Clean horizontal layout */}
-        <div className="flex flex-wrap gap-2 min-h-[2.5rem]">
+        <div className="flex flex-wrap gap-2">
           {model.features.slice(0, 3).map((feature, index) => (
             <span
               key={index}
-              className="px-3 py-1.5 bg-gray-800 text-gray-300 rounded-xl text-xs font-medium border border-gray-700 hover:border-gray-600 hover:bg-gray-750 transition-all duration-200"
+              className="px-2.5 py-1 bg-white/5 text-gray-300 rounded-md text-xs font-medium border border-white/5 group-hover:border-cyan-500/30 transition-colors duration-300 flex items-center"
             >
+              <Zap className="w-3 h-3 mr-1 text-cyan-400" />
               {feature}
             </span>
           ))}
           {model.features.length > 3 && (
-            <span className="px-3 py-1.5 bg-gray-800/60 text-gray-400 rounded-xl text-xs font-medium border border-gray-700/50">
-              +{model.features.length - 3} more
+            <span className="px-2.5 py-1 bg-white/5 text-gray-400 rounded-md text-xs font-medium border border-white/5">
+              +{model.features.length - 3}
             </span>
           )}
         </div>
@@ -54,19 +62,19 @@ const ModelCard: React.FC<ModelCardProps> = ({ model }) => {
         <div className="flex items-center gap-3 pt-2">
           <button
             onClick={() => navigate(`/model/${encodeURIComponent(model.id)}`)}
-            className="flex-1 px-4 py-2.5 bg-white text-gray-900 rounded-2xl font-semibold text-sm hover:bg-gray-100 transition-all duration-200 shadow-sm hover:shadow-md"
+            className="flex-1 px-4 py-2.5 bg-white text-gray-900 rounded-xl font-bold text-sm hover:bg-cyan-50 transition-all duration-200 shadow-lg shadow-cyan-500/10"
           >
-            Learn More
+            View Details
           </button>
           
           <a
             href={model.testUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="group/link flex items-center justify-center space-x-2 px-4 py-2.5 border border-gray-700 text-gray-400 rounded-2xl text-sm font-medium hover:border-gray-600 hover:text-gray-300 transition-all duration-200"
+            className="group/link flex items-center justify-center w-10 h-10 border border-white/10 text-gray-400 rounded-xl hover:bg-white/5 hover:text-cyan-300 hover:border-cyan-500/30 transition-all duration-200"
+            title="Test Model"
           >
-            <span>Test</span>
-            <ExternalLink className="w-4 h-4 transition-transform duration-200 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" />
+            <ExternalLink className="w-4 h-4 transition-transform duration-200 group-hover/link:scale-110" />
           </a>
         </div>
       </div>

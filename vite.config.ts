@@ -6,7 +6,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://aiinventory-633863780201.us-central1.run.app',
+        target: 'https://aiinventorybackend.onrender.com',
         changeOrigin: true,
         secure: false,
       }

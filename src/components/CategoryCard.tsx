@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { 
   Tag, MessageSquare, TrendingUp, Cpu, FileText, Code, Image, Video, Mic, 
   Briefcase, Search, Palette, User, Database, Users, Settings, BookOpen, 
-  Layers, Globe, Smartphone, Github, MessageCircle
+  Layers, Globe, Smartphone, Github, MessageCircle, ArrowRight
 } from 'lucide-react';
 import { Category } from '../types/model';
 
@@ -48,38 +48,39 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ category }) => {
 
   return (
     <div
-      className="group bg-gray-900 rounded-3xl p-6 cursor-pointer transition-all duration-300 hover:shadow-xl hover:shadow-gray-800/50 border border-gray-800 hover:border-gray-700"
+      className="group glass-card rounded-3xl p-6 cursor-pointer relative overflow-hidden"
       onClick={() => navigate(`/category/${category.id}`)}
     >
+      {/* Background Gradient on Hover */}
+      <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-violet-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
       {/* Main content */}
-      <div className="space-y-4">
+      <div className="relative z-10 space-y-4">
         {/* Icon and header */}
         <div className="flex items-center space-x-4">
-          <div className="p-3 bg-gray-800 rounded-2xl group-hover:bg-gray-750 transition-all duration-300 border border-gray-700">
-            <Icon className="w-6 h-6 text-gray-300 group-hover:text-white transition-colors duration-300" />
+          <div className="p-3 bg-white/5 rounded-xl group-hover:bg-cyan-500/10 transition-all duration-300 border border-white/10 group-hover:border-cyan-500/30">
+            <Icon className="w-6 h-6 text-gray-400 group-hover:text-cyan-400 transition-colors duration-300" />
           </div>
           
           <div className="flex-1">
-            <h3 className="text-xl font-bold text-white group-hover:text-gray-100 transition-colors duration-300">
+            <h3 className="text-lg font-bold text-white group-hover:text-cyan-300 transition-colors duration-300 font-outfit">
               {category.name}
             </h3>
           </div>
         </div>
 
         {/* Description */}
-        <p className="text-gray-400 group-hover:text-gray-300 transition-colors duration-300 text-sm leading-relaxed">
+        <p className="text-gray-400 group-hover:text-gray-300 transition-colors duration-300 text-sm leading-relaxed line-clamp-2">
           {category.description}
         </p>
 
         {/* Explore indicator */}
         <div className="flex justify-between items-center pt-2">
-          <div className="flex items-center space-x-2 text-gray-500 group-hover:text-gray-400 transition-colors duration-300">
-            <span className="text-sm font-medium">Explore Category</span>
-          </div>
-          <div className="w-6 h-6 rounded-full bg-gray-800 border border-gray-700 flex items-center justify-center group-hover:bg-gray-750 group-hover:border-gray-600 transition-all duration-300">
-            <svg className="w-3 h-3 text-gray-400 group-hover:text-gray-300 transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
+          <span className="text-xs font-medium text-gray-500 group-hover:text-cyan-400 transition-colors duration-300 uppercase tracking-wider">
+            Explore
+          </span>
+          <div className="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center group-hover:bg-cyan-500 group-hover:text-white transition-all duration-300 transform group-hover:translate-x-1">
+            <ArrowRight className="w-4 h-4" />
           </div>
         </div>
       </div>

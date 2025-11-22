@@ -6,6 +6,6 @@
     }
   ],
   "env": {
-    "VITE_API_URL": "https://aiinventory-633863780201.us-central1.run.app/api"
+    "VITE_API_URL": "https://aiinventorybackend.onrender.com/api"
   }
 }

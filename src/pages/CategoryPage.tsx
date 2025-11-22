@@ -102,10 +102,10 @@ const CategoryPage: React.FC = () => {
         </Link>
 
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-white-300 mb-2 flex items-center gap-3">
+          <h1 className="text-3xl md:text-4xl font-bold text-white-300 mb-2 flex items-center gap-3">
             {category.name}
           </h1>
-          <p className="text-lg text-gray-300">{category.description}</p>
+          <p className="text-base md:text-lg text-gray-300">{category.description}</p>
         </div>
 
         {loading ? (

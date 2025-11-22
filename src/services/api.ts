@@ -1,11 +1,12 @@
 import axios from 'axios';
 
+
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://aiinventorybackend.onrender.com/api';
 
 // Create axios instance with default config
 const api = axios.create({
   baseURL: API_BASE_URL,
-  timeout: 30000, // Increased to 30 seconds for AI enhancement
+  timeout: 10000,
   headers: {
     'Content-Type': 'application/json',
     'Accept': 'application/json',
@@ -33,20 +34,7 @@ api.interceptors.response.use(
   },
   (error) => {
     console.error('❌ API Response Error:', error);
-    
-    if (error.code === 'ERR_NETWORK') {
-      throw new Error('Network connection failed. Please check CORS configuration.');
-    }
-    
-    if (error.response?.status === 429) {
-      throw new Error('Too many requests. Please try again later.');
-    }
-    
-    if (error.response?.status >= 500) {
-      throw new Error('Server error. Please try again later.');
-    }
-    
-    throw new Error(error.response?.data?.error || error.message || 'An error occurred');
+    return Promise.reject(error);
   }
 );
 
@@ -97,7 +85,6 @@ class ApiService {
   async getModels(filters: ModelFilters = {}): Promise<PaginatedResponse<any>> {
     try {
       const params = new URLSearchParams();
-      
       Object.entries(filters).forEach(([key, value]) => {
         if (value !== undefined && value !== null) {
           if (Array.isArray(value)) {
@@ -110,41 +97,22 @@ class ApiService {
 
       const response = await api.get(`/models?${params.toString()}`);
       
-      // Since interceptor returns response.data, check the structure
-      if (response && typeof response === 'object') {
-        // If it has a 'data' property, use that
-        if ('data' in response && response.data) {
-          return response.data;
-        }
-        // If it has models property directly, return as is
-        if ('models' in response && 'pagination' in response) {
-          return response as PaginatedResponse<any>;
-        }
-        // Otherwise, wrap in expected format
-        return {
-          models: Array.isArray(response) ? response : [],
-          pagination: {
-            current: 1,
-            total: 1,
-            count: Array.isArray(response) ? response.length : 0,
-            totalModels: Array.isArray(response) ? response.length : 0
-          }
-        };
+      if (response && (response.data || response.models)) {
+        return response.data || response;
       }
-      
-      // Fallback
+      throw new Error('Invalid API response');
+    } catch (error) {
+      console.warn('⚠️ API failed', error);
+      // Return empty structure to prevent UI crashes
       return {
         models: [],
         pagination: {
           current: 1,
-          total: 1,
+          total: 0,
           count: 0,
           totalModels: 0
         }
       };
-    } catch (error) {
-      console.error('Error fetching models:', error);
-      throw error;
     }
   }
 
@@ -154,23 +122,38 @@ class ApiService {
     page: number = 1, 
     limit: number = 20
   ): Promise<PaginatedResponse<any>> {
-    const response = await api.get(`/models/category/${category}`, {
-      params: { page, limit }
-    });
-    return response.data;
+    return this.getModels({ category, page, limit });
   }
 
   // Get single model by ID
   async getModel(id: string): Promise<any> {
-    const response = await api.get(`/models/${id}`);
-    return response.data;
+    try {
+      const response = await api.get(`/models/${id}`);
+      return response.data || response;
+    } catch (error) {
+      console.warn(`⚠️ API failed for model ${id}`, error);
+      throw error;
+    }
   }
 
-  // Get enhanced model details with AI enhancement if needed
+  // Get enhanced model details
+  async getDetailed(id: string, forceEnhancement: boolean = false): Promise<any> {
+    try {
+      const params = forceEnhancement ? '?forceEnhancement=true' : '';
+      const response = await api.get(`/models/${id}/detailed${params}`);
+      return response.data || response;
+    } catch (error) {
+      console.warn(`⚠️ API failed for detailed model ${id}`, error);
+      return {
+        success: false,
+        message: 'Model not found or API unavailable'
+      };
+    }
+  }
+  
+  // Alias for getDetailed to match some calls
   async getDetailedModel(id: string, forceEnhancement: boolean = false): Promise<any> {
-    const params = forceEnhancement ? '?forceEnhancement=true' : '';
-    const response = await api.get(`/models/${id}/detailed${params}`);
-    return response.data;
+    return this.getDetailed(id, forceEnhancement);
   }
 
   // Search models
@@ -178,74 +161,46 @@ class ApiService {
     query: string, 
     filters: Omit<ModelFilters, 'search'> = {}
   ): Promise<PaginatedResponse<any>> {
-    const params = new URLSearchParams({ q: query });
-    
-    Object.entries(filters).forEach(([key, value]) => {
-      if (value !== undefined && value !== null) {
-        if (Array.isArray(value)) {
-          params.append(key, value.join(','));
-        } else {
-          params.append(key, String(value));
-        }
-      }
-    });
-
-    const response = await api.get(`/search?${params.toString()}`);
-    return response.data;
+    return this.getModels({ ...filters, search: query });
   }
 
   // Get model statistics
   async getModelStats(): Promise<ModelStats> {
-    const response = await api.get('/stats');
-    return response.data;
+    try {
+      const response = await api.get('/stats');
+      return response.data || response;
+    } catch (error) {
+      console.warn('⚠️ API failed for stats', error);
+      return {
+        totalModels: 0,
+        categories: [],
+        providers: [],
+        recentModels: [],
+        popularModels: [],
+        lastUpdated: new Date().toISOString()
+      };
+    }
   }
 
-  // Get health status
-  async getHealth(): Promise<any> {
-    const response = await api.get('/health'); // Fixed: removed /admin prefix
-    return response;
+  // Get system health
+  async getHealth(): Promise<{ status: string; timestamp: string }> {
+    try {
+      const response = await api.get('/health');
+      return response.data;
+    } catch (error) {
+      return { status: 'offline', timestamp: new Date().toISOString() };
+    }
   }
 
-  // Admin functions
-  async triggerScraping(source: string = 'all'): Promise<any> {
-    const response = await api.post('/scrape', { source });
-    return response;
-  }
-
-  async triggerAdminScraping(source: string = 'all'): Promise<any> {
-    const response = await api.post('/admin/scrape', { source });
-    return response;
-  }
-
-  async getScrapeStatus(): Promise<any> {
-    const response = await api.get('/scrape/status');
-    return response;
-  }
-
-  async triggerCleanup(olderThanDays: number = 30): Promise<any> {
-    const response = await api.post('/admin/cleanup', { older_than_days: olderThanDays });
-    return response;
-  }
-
-  async triggerStatsUpdate(): Promise<any> {
-    const response = await api.post('/admin/update-stats');
-    return response;
-  }
-
-  async triggerDailyUpdate(): Promise<any> {
-    const response = await api.post('/update');
-    return response.data;
-  }
-
-  async getTaskStatus(): Promise<any> {
-    const response = await api.get('/admin/tasks');
-    return response.data;
-  }
-
-  // Newsletter subscription
+  // Subscribe to newsletter
   async subscribeNewsletter(email: string): Promise<any> {
-    const response = await api.post('/newsletter/subscribe', { email });
-    return response.data;
+    try {
+      const response = await api.post('/subscribe', { email });
+      return response.data;
+    } catch (error) {
+      console.warn('⚠️ API failed for subscription', error);
+      return { success: false, message: 'Subscription service unavailable' };
+    }
   }
 }
 
